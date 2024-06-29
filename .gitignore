@@ -1,3 +1,4 @@
 .envrc
 documents.json
 .ipynb_checkpoints/
+ollama_files/
