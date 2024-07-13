@@ -5,6 +5,11 @@ name = "pypi"
 
 [packages]
 openai = "*"
+elasticsearch = "*"
+numpy = "==1.26.4"
+torch = "*"
+sentence-transformers = "==2.7.0"
+pandas = "*"
 
 [dev-packages]
 jupyter = "*"
