@@ -10,6 +10,7 @@ numpy = "==1.26.4"
 torch = "*"
 sentence-transformers = "==2.7.0"
 pandas = "*"
+rouge = "*"
 
 [dev-packages]
 jupyter = "*"
