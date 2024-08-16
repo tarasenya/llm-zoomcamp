@@ -11,6 +11,7 @@ torch = "*"
 sentence-transformers = "==2.7.0"
 pandas = "*"
 rouge = "*"
+python-dotenv = "*"
 
 [dev-packages]
 jupyter = "*"

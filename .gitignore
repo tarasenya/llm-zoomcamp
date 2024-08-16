@@ -2,3 +2,6 @@
 documents.json
 .ipynb_checkpoints/
 ollama_files/
+.env
+.file_versions/
+.ssh_tunnel/
