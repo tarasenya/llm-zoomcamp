@@ -77,7 +77,7 @@ Which is the document ID of
 Copy the code to the editor
 How many FAQ documents we processed?
 
-* 1
+* 1 <--- this
 * 2
 * 3
 * 4
