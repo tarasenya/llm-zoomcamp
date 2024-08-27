@@ -140,7 +140,7 @@ How many documents (chunks) do we have in the output?
 
 * 66
 * 76
-* 86
+* 86 <-- this
 * 96
 
 
@@ -242,9 +242,9 @@ print(document)
 
 Now execute the block.
 
-What's the last document id?
+What's the last document id? a976d6e7
 
-Also note the index name.
+Also note the index name.documents_20240816_0811
 
 
 ## Q5. Testing the retrieval
@@ -254,7 +254,7 @@ test it.
 
 Let's use the following query: "When is the next cohort?"
 
-What's the ID of the top matching result?
+What's the ID of the top matching result? bf024675
 
 
 ## Q6. Reindexing
@@ -268,7 +268,7 @@ The ID of this document is `1T3MdwUvqCL3jrh3d3VCXQ8xE0UqRzI3bfgpfBq3ZWG0`.
 
 Let's re-execute the entire pipeline with the updated data.
 
-For the same query "When is the next cohort?". What's the ID of the top matching result?
+For the same query "When is the next cohort?". What's the ID of the top matching result? b6fa77f3
 
 
 
