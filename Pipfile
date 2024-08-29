@@ -12,6 +12,7 @@ sentence-transformers = "==2.7.0"
 pandas = "*"
 rouge = "*"
 python-dotenv = "*"
+nbconvert = "*"
 
 [dev-packages]
 jupyter = "*"
