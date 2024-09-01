@@ -13,6 +13,9 @@ pandas = "*"
 rouge = "*"
 python-dotenv = "*"
 nbconvert = "*"
+aiohttp = "*"
+tenacity = "*"
+loguru = "*"
 
 [dev-packages]
 jupyter = "*"
