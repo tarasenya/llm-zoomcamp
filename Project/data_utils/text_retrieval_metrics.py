@@ -11,5 +11,4 @@ def hit_rate(relevance_total):
     for line in relevance_total:
         if True in line:
                 cnt += 1
-                break
     return cnt / len(relevance_total)

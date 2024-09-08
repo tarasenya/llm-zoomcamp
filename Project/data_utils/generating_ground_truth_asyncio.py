@@ -22,24 +22,36 @@ REQUEST_INTERVAL = 0.5  # Time in seconds between requests
 MAX_RETRIES = 3  # Maximum number of retries for a failed request
 RETRY_DELAY = 2  # Delay between retries in seconds
 
-prompt_template_for_generating_gt = """You are emulating a stereotypical IT manager who communicates in vague terms laden with tech jargon and geek slang. Your task is to take a straightforward statement or question and reformulate it into 5 different vague versions that an IT professional might use in a workplace setting.
+prompt_template_for_generating_gt = """
+You are an AI assistant tasked with creating slight variations of IT manager statements. Your job is to take a vague, jargon-filled IT statement and create 5 slightly modified versions of it.
 
 Guidelines:
-1. Use IT and programming terminology, even if it's not entirely relevant.
-2. Incorporate popular tech buzzwords and acronyms.
-3. Reference memes or cultural touchstones popular in tech circles.
-4. Employ vague tech metaphors or analogies.
-5. Occasionally misuse or overuse technical terms for humorous effect.
-6. Keep the core message somewhat intact, but obfuscate it with jargon.
+1. Keep the overall structure and tone of the original statement.
+2. Make minor changes to wording, but maintain the same level of jargon and vagueness.
+3. Preserve any tech terminology, buzzwords, or acronyms present in the original.
+4. Ensure the core meaning remains intact.
+5. Aim for variations that an IT manager might use interchangeably in different conversations.
 
-The original statement/question:
+The original vague IT statement:
 {question}
 
 Provide the output as a list of 5 Python strings in parsable JSON format, like this:
-["tech_vague_statement_1", "tech_vague_statement_2", "tech_vague_statement_3", "tech_vague_statement_4", "tech_vague_statement_5"]
+["variant_1", "variant_2", "variant_3", "variant_4", "variant_5"]
+
 Do not include additional information or code blocks.
 
-Remember, the goal is to create statements that sound impressive and technical, but are actually quite vague and possibly confusing to non-tech people, while still maintaining a strong connection to the original concept.
+Remember, the goal is to create statements that are very similar to the original, with only minor variations. They should all sound like they could have been said by the same IT manager in slightly different contexts.
+
+Example:
+Original: "Lets put our ducks in a row and get this cluster untangled before it goes pear-shaped."
+Variations:
+[
+  "We need to get our ducks in a row and untangle this cluster before it goes pear-shaped.",
+  "Time to line up our ducks and sort out this cluster before we hit pear-shaped territory.",
+  "Lets align our ducks and detangle this cluster situation before pear-shaped becomes our reality.",
+  "We should organize our ducks and unravel this cluster mess before pear-shaped is on the horizon.",
+  "Its crucial we arrange our ducks and resolve this cluster tangle before pear-shaped strikes."
+]
 """.strip()
 
 
@@ -66,7 +78,7 @@ async def process_document(doc, semaphore):
     max_attempts = 3
     for attempt in range(max_attempts):
         try:
-            generated = await generate_ground_truth_statement(doc['actual'], semaphore)
+            generated = await generate_ground_truth_statement(doc['vague'], semaphore)
             generated = generated.replace('```', '').strip()
             parsed = json.loads(generated)
             if isinstance(parsed, list) and len(parsed) == 5:

@@ -5,3 +5,5 @@ ollama_files/
 .env
 .file_versions/
 .ssh_tunnel/
+*.log
+*.pyc
