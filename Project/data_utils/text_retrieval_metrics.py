@@ -2,7 +2,7 @@ def mrr(relevance_total):
     total_score = 0
     for line in relevance_total:
         for rank in range(len(line)):
-            if line[rank] == True:
+            if line[rank] is True:
                 total_score += 1 / (rank + 1)
     return total_score / len(relevance_total)
 
