@@ -17,7 +17,24 @@ class ElasticSearcher:
             result_docs.append(hit['_source'])
     
         return result_docs
+class ElasticKeywordSearcher(ElasticSearcher):
+    def search_query(self, input_argument):
+        _search_query = {
+        "size": 5,
+        "query": {
+            "bool": {
+                "must": {
+                    "multi_match": {
+                        "query": input_argument,
+                        "fields": ["vague^3", "actual"],
+                        "type": "best_fields"
+                    }
+                },
 
+                     }
+                    }
+                        }
+        return _search_query
 class ElasticSemanticSearcher(ElasticSearcher):
     
     def search_query(self, input_argument):
