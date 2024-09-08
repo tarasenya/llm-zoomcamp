@@ -9,9 +9,24 @@ Everyday one confronts with vague statements of his/her boss. Often a boss tries
 
 ## Data Generation
 Since it is a sensible topic, the corresponding data has been generated using ChatGPT.
+This is done using ```src/inital_data_generation.py```. The corresponding output has been saved to ```data/initial_data.json```.
 
 ## Ground Truth Generation
+Ground truth has been also generated using ChtaGPT (_gpt-4o-mini_ model). The result has been saved to ```data/ground_truth_data.csv```. This data has been used for a retrieval evaluation.
 
 ## Data Retrieval
+Data Retrieval has been evaluated using __hit_rate__ and __mrr__ metrics. I refer to the [Evaluation retrieval notebook](./notebooks/retrieval_evaluation.ipynb).
+The following retrieval possibilities has been considered:
+ - Semantic search exploiting ```SentenceTransformer``` with the model _multi-qa-MiniLM-L6-cos-v1_.
+ - Semantic search exploiting ```SentenceTransformer``` with the model _all-mpnet-base-v2_.
+ - Keyword search.
+  For every retrieval evaluation a separate index has been defined (see [ingestion code](./src/data_ingestion.py)) and a separate class for a search functionality has been introduced (see [elastic search code](./src/elastic_search_engine.py)). The results are as the following:
+
+  | Metric   | keyword search | multi-qa-MiniLM-L6-cos-v1 | all-mpnet-base-v2 |
+  |----------|----------------|---------------------------|-------------------|
+  | hit_rate | 0.95           | 0.87                      | 0.97              |
+  | mrr      | 0.90           | 0.81                      | 0.93              |
+ 
+ I will use a simple __keyword search__ in the future.
 
 ## RAG
