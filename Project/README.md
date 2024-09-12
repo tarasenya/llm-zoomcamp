@@ -27,6 +27,9 @@ The following retrieval possibilities has been considered:
   | hit_rate | 0.95           | 0.87                      | 0.97              |
   | mrr      | 0.90           | 0.81                      | 0.93              |
  
- I will use a simple __keyword search__ in the future.
+ I will use a knn elastic search with __all-mpnet-base-v2__ module in the future.
 
+Disclaimer: The results are so good, since the data has been generated using ChatGPT,hence we do not have the variability of the real world. Of course, one can play with prompts to achieve it, but due to lack of time I leave it as it is.
 ## RAG
+
+### RAG Evaluation
