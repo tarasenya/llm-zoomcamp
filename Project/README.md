@@ -43,5 +43,8 @@ The RAG with a specific prompt has shown a much better quality and hence will be
 ### CLI
 This is the easiest possibility to serve it. Execute the following from the root folder of a project (assuming that make and docker have been installed)
 ```bash
-make start_
+make run_all_cli
 ```
+This starts docker container with Elastic Search, ignests the inital data and starts an easy CLI to interact with RAG.
+
+### Streamlit Applicaiton
