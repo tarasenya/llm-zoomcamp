@@ -1,0 +1,26 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+openai = "*"
+elasticsearch = "*"
+numpy = "==1.26.4"
+torch = "*"
+sentence-transformers = "==2.7.0"
+pandas = "*"
+rouge = "*"
+python-dotenv = "*"
+nbconvert = "*"
+aiohttp = "*"
+tenacity = "*"
+loguru = "*"
+
+[dev-packages]
+jupyter = "*"
+ipykernel = "*"
+seaborn = "*"
+
+[requires]
+python_version = "3.10"
