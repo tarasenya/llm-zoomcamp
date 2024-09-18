@@ -16,6 +16,8 @@ nbconvert = "*"
 aiohttp = "*"
 tenacity = "*"
 loguru = "*"
+streamlit = "*"
+psycopg2-binary = "==2.9.9"
 
 [dev-packages]
 jupyter = "*"
