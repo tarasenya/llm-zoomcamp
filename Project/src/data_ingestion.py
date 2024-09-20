@@ -133,9 +133,10 @@ class ElasticSearchIngestionForKeywordSearch(AbstractElasticsearchIngestion):
         
 async def main_semantic_search(model_name='multi-qa-MiniLM-L6-cos-v1',
                                index_name='vague-actual',
-                               dims=384):
+                               dims=384,
+                               es_host='http://localhost:9200'):
     ingestion = ElasticsearchIngestionForSemanticSearch(
-        es_host='http://localhost:9200',
+        es_host=es_host,
         index_name=index_name,
         model_name=model_name,
         dims=dims
