@@ -1,12 +1,10 @@
 from openai import OpenAI
-from dotenv import find_dotenv, load_dotenv
 from abc import ABC, abstractmethod
 from typing import Any
 from sentence_transformers import SentenceTransformer
 
-from src.elastic_search_engine import ElasticKeywordSearcher
+from elastic_search_engine import ElasticKeywordSearcher
 
-load_dotenv(find_dotenv('../.env'))
 
 class AbstractRAG(ABC):
     

@@ -1,4 +1,6 @@
-from src import rag, elastic_search_engine
+import os
+import rag
+import elastic_search_engine
 
 ambiguity_resolver_prompt = """You are an Ambiguity Resolver for tech management communication. Your task is to:
 
@@ -14,10 +16,24 @@ CONTEXT: {context}
 
 CLEAR STATEMENT:""".strip()
 
-elastic_semantic_searcher = elastic_search_engine.ElasticSemanticSearcher(index_name='vague-actual-mpnet')
 
-# defining new RAG with a prompt above
-ambiguity_resolver_rag= rag.ChatGPTRAG(elastic_searcher=elastic_semantic_searcher,
-                 prompt_template=ambiguity_resolver_prompt, 
-                 llm_model='gpt-4o-mini',
-                 sentence_transformer_name='all-mpnet-base-v2')
+def create_rag(elastic_url=None):
+    if elastic_url:
+        os.environ['ELASTIC_URL'] = elastic_url
+    
+    elastic_semantic_searcher = elastic_search_engine.ElasticSemanticSearcher(
+        index_name="vague-actual-mpnet",
+        elastic_search_client_uri=os.getenv("ELASTIC_URL", "http://localhost:9200"),
+    )
+
+    print(f'ELASTIC_URL {os.getenv("ELASTIC_URL")}')
+    # defining new RAG with a prompt above
+    return rag.ChatGPTRAG(
+        elastic_searcher=elastic_semantic_searcher,
+        prompt_template=ambiguity_resolver_prompt,
+        llm_model="gpt-4o-mini",
+        sentence_transformer_name="all-mpnet-base-v2",
+    )
+
+# Initialize with default settings
+ambiguity_resolver_rag = create_rag()

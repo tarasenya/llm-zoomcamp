@@ -26,7 +26,7 @@ ingest_data:
 	pipenv run python src/data_ingestion.py
 
 start_basic_cli:
-	pipenv run python src/cli_rag.py
+	export ELASTIC_URL=http://localhost:9200 && pipenv run python src/cli_rag.py
 
 run_all_cli:
 	@echo "Starting Elasticsearch..."
