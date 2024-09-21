@@ -51,7 +51,7 @@ class Feedback(Base):
     timestamp = Column(DateTime(timezone=True), nullable=False)
     conversation = relationship("Conversation", back_populates="feedback")
 
-
+#TODO: delete it, use from base db operations
 def create_user_and_db():
     if os.path.exists("../.env"):
         POSTGRES_HOST = os.getenv("POSTGRES_HOST_LOCAL")
@@ -95,7 +95,7 @@ def create_user_and_db():
     cur.close()
     conn.close()
 
-
+# TODO: delete it
 def get_db_engine():
     if os.path.exists("../.env"):
         POSTGRES_HOST = os.getenv("POSTGRES_HOST_LOCAL")
