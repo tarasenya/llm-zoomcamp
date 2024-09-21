@@ -1,0 +1,12 @@
+apiVersion: 1
+
+datasources:
+  - name: vage-translator-app-db
+    type: postgres
+    url: postgres:5432
+    database: vague_translator
+    user: your_username
+    secureJsonData:
+      password: your_password
+    jsonData:
+      sslmode: "disable" # Enable SSL if your setup requires it
