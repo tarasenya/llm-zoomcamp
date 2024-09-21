@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 from zoneinfo import ZoneInfo
-
+from judge_llm import LLMJudgementScore
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
@@ -29,7 +29,14 @@ class Conversation(Base):
     answer = Column(String, nullable=False)
     model_used = Column(String, nullable=False)
     response_time = Column(Float, nullable=False)
-    relevance = Column(String, nullable=False)
+    clarity = Column(Integer, nullable=True)
+    relevance = Column(Integer, nullable=True)
+    accuracy = Column(Integer, nullable=True)
+    completeness = Column(Integer, nullable=True)
+    overall_score = Column(Float, nullable=True)
+    explanation = Column(String, nullable=True)
+    improvement_suggestions = Column(String, nullable=True)
+    #TODO: delete this column
     relevance_explanation = Column(String, nullable=False)
     timestamp = Column(DateTime(timezone=True), nullable=False)
     feedback = relationship("Feedback", back_populates="conversation")
@@ -114,7 +121,15 @@ def get_db_session():
     return Session()
 
 
-def save_conversation(conversation_id, question, answer_data, timestamp=None):
+def save_conversation(
+    conversation_id: int,
+    question: str,
+    answer: str,
+    model_used: str,
+    llm_judgement_score: LLMJudgementScore,
+    response_time: float,
+    timestamp=None,
+):
     if timestamp is None:
         timestamp = datetime.now(tz)
 
@@ -123,11 +138,18 @@ def save_conversation(conversation_id, question, answer_data, timestamp=None):
         conversation = Conversation(
             id=conversation_id,
             question=question,
-            answer=answer_data,
-            model_used='chatgtp',
-            response_time=100,
-            relevance=2,
-            relevance_explanation=4,
+            answer=answer,
+            model_used=model_used,
+            response_time=response_time,
+            clarity=llm_judgement_score.clarity,
+            #TODO: Delete it
+            relevance_explanation = 'Hello',
+            relevance=llm_judgement_score.relevance,
+            accuracy=llm_judgement_score.accuracy,
+            completeness=llm_judgement_score.completeness,
+            overall_score=llm_judgement_score.overall_score,
+            explanation=llm_judgement_score.explanation,
+            improvement_suggestions=llm_judgement_score.improvement_suggestions,
             timestamp=timestamp,
         )
         session.add(conversation)

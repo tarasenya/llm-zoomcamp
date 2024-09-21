@@ -1,6 +1,36 @@
 import llm
 import re
+from dataclasses import dataclass
+from typing import Dict, TypedDict
 
+
+@dataclass
+class LLMJudgementScore:
+    clarity: float
+    relevance: float
+    accuracy: float
+    completeness: float
+    overall_score: float
+    explanation: str
+    improvement_suggestions: str
+
+    @classmethod
+    def from_dict(cls, data: Dict) -> "LLMJudgementScore":
+        criteria_scores = data["Criteria Scores"]
+        return cls(
+            clarity=criteria_scores["Clarity"],
+            relevance=criteria_scores["Relevance"],
+            accuracy=criteria_scores["Accuracy"],
+            completeness=criteria_scores["Completeness"],
+            overall_score=data["Overall Score"],
+            explanation=data.get("Explanation", None),
+            improvement_suggestions=data.get("Improvement Suggestions", None)
+        )
+
+class JudgeLLMPromptInput(TypedDict):
+    vague: str
+    translation: str
+    
 class JudgeLLM:
     judge_prompt_template = """ 
     LLM-as-a-Judge Prompt for RAG Evaluation
@@ -48,7 +78,7 @@ class JudgeLLM:
     Improvement Suggestions (if necessary): [Your suggestions]
     Please provide your evaluation for the given example.
     """.strip()
-    
+
     @staticmethod
     def parse_evaluation_text(text: str) -> dict:
         """
@@ -62,20 +92,20 @@ class JudgeLLM:
         """
         # Initialize the dictionary
         result = {"Criteria Scores": {}}
-        
+
         # Use regex to extract key-value pairs
         patterns = {
-            "Criteria Scores": r'(\w+):\s*(\d+)',
-            "Overall Score": r'Overall Score:\s*([\d.]+)',
-            "Explanation": r'Explanation:\s*(.*?)(?=\n\n|\Z)',
-            "Improvement Suggestions": r'Improvement Suggestions:\s*(.*?)(?=\n\n|\Z)'
+            "Criteria Scores": r"(\w+):\s*(\d+)",
+            "Overall Score": r"Overall Score:\s*([\d.]+)",
+            "Explanation": r"Explanation:\s*(.*?)(?=\n\n|\Z)",
+            "Improvement Suggestions": r"Improvement Suggestions:\s*(.*?)(?=\n\n|\Z)",
         }
-        
+
         # Extract Criteria Scores
         criteria_scores = re.findall(patterns["Criteria Scores"], text)
         for criterion, score in criteria_scores:
             result["Criteria Scores"][criterion] = int(score)
-        
+
         # Extract other fields
         for key, pattern in patterns.items():
             if key != "Criteria Scores":
@@ -83,10 +113,11 @@ class JudgeLLM:
                 if match:
                     value = match.group(1).strip()
                     result[key] = float(value) if key == "Overall Score" else value
-        
+
         return result
 
-    def judget_it(self, rec):
-            judge_prompt = self.judge_prompt_template.format(**rec)
-            answer = llm.llm(prompt=judge_prompt, gpt_model='gpt-4o-mini')
-            return self.parse_evaluation_text(answer)
+    def judget_it(self, rec: JudgeLLMPromptInput) -> LLMJudgementScore:
+        judge_prompt = self.judge_prompt_template.format(**rec)
+        answer = llm.llm(prompt=judge_prompt, gpt_model="gpt-4o-mini")
+        print(answer, flush=True)
+        return LLMJudgementScore.from_dict(self.parse_evaluation_text(answer))
