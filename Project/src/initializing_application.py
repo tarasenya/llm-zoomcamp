@@ -1,7 +1,7 @@
 import asyncio
 import os
 from data_ingestion import main_semantic_search
-from db import init_db, create_user_and_db
+from database_operations.base_db_operations import init_db, create_user_and_db
 from dotenv import load_dotenv
 from loguru import logger 
 

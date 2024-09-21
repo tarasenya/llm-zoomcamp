@@ -2,7 +2,7 @@ import datetime
 from sqlalchemy.orm import sessionmaker
 from faker import Faker
 import random
-from base_db_operations import get_db_engine
+from database_operations.base_db_operations import get_db_engine
 from database_operations.table_definitions import Conversation, Feedback, Base
 from dotenv import load_dotenv
 

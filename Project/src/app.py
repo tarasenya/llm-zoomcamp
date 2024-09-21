@@ -4,7 +4,7 @@ import uuid
 
 from ambiguity_resolver_rag import ambiguity_resolver_rag
 from judge_llm import JudgeLLM, LLMJudgementScore, JudgeLLMPromptInput
-from db import (
+from database_operations.db import (
     save_conversation,
     save_feedback,
     get_feedback_stats,
