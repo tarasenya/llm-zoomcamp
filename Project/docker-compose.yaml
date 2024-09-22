@@ -29,6 +29,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
   
   init:
+    profiles: ["init"]
     build:
       context: .
       dockerfile: Dockerfile.init
