@@ -65,8 +65,6 @@ services:
       - "${STREAMLIT_PORT:-8501}:8501"
     volumes:
       - ./src:/app
-    depends_on:
-      - init
 
   grafana:
     image: grafana/grafana:latest

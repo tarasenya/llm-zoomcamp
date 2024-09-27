@@ -1,4 +1,4 @@
-.PHONY: start_elastic_search ingest_data start_basic_cli
+.PHONY: start_elastic_search ingest_data start_basic_cli run_streamlit_application run_streamlit_application_with_ingestion
 
 start_elastic_search:
 	docker run -it \
@@ -39,3 +39,10 @@ run_all_cli:
 	@make ingest_data
 	@echo "Data ingestion complete. Starting CLI..."
 	@make start_basic_cli
+
+run_streamlit_application_with_ingestion:
+	@echo "Starting Strealit Application"
+	@docker-compose --profile init up
+
+run_streamlit_application:
+	docker-compose up

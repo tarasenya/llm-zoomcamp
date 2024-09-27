@@ -48,3 +48,16 @@ make run_all_cli
 This starts docker container with Elastic Search, ignests the inital data and starts an easy CLI to interact with RAG.
 
 ### Streamlit Applicaiton
+Streamlit Application (see [Dockerfile](Dockerfile)) together with related services have been [dockerized](docker-compose.yaml). To start it for the first time (then the ingestion will be triggered, this exploits _init_ container that is started, ingestion is being triggered and then it exists):
+Rename ```dev.env``` to ```env``` and input the OPENAI_API_KEY.
+
+```bash
+ make run_streamlit_application_with_ingestion 
+ ```
+
+To start it once again:
+
+```bash
+make run_streamlit_application
+```
+For more details about the application, its monitoring, containerization and cloud deployment consult the [streamlit app documentation](StreamlitApplication.md)
