@@ -41,11 +41,11 @@ run_all_cli:
 	@make start_basic_cli
 
 run_streamlit_application_with_ingestion:
-	@echo "Starting Strealit Application"
-	@docker-compose --profile init up
+	@echo "Starting Streamlit Application"
+	docker compose --profile init up
 
 run_streamlit_application:
-	docker-compose up
+	docker compose up
 
 fetch_phi:
 	docker-compose exec ollama ollama pull phi3
