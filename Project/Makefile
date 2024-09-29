@@ -48,4 +48,4 @@ run_streamlit_application:
 	docker compose up
 
 fetch_phi:
-	docker-compose exec ollama ollama pull phi3
+	docker compose exec ollama ollama pull phi3
