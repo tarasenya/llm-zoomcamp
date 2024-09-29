@@ -24,6 +24,10 @@ The application consists of the following services
     - Port: 3000
     - Configurable admin password
     - Pre-configured dashboard
+* ```ollama```
+    - Latest Ollama image
+    - Port: 11434
+    - We can pull different models to serve them later
 
 All services use named volumes for data persistence.
 
@@ -51,10 +55,11 @@ To gather statistics quicker [a script](./src/create_artificial_data.py) that cr
 One needs only to
 0. have Docker on a computer.
 1. define an own ```.env``` file, that is similar to ```dev.env```.
-2. execute from a rool folder 
-```bash
-make run_streamlit_application_with_ingestion
-```
+2. execute from a root folder 
+    ```bash
+    chmod +x start.sh
+    ./start.sh
+    ```
 3. wait until all services are up and the ingestion has been executed (Remark: unfortunately the _depens-on_ function od docker does NOT gurantee the correct order of container execution, one needs to work with definition of healthiness of a service, but I dont have time for this)
 4. go to 8501 port on localhost and enjoy the applciation.
 _Remark: _ The code dependencies are defined in Pipfile/Pipfile.lock.
