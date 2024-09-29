@@ -88,6 +88,7 @@ services:
       - ollama_data:/root/.ollama
     ports:
       - "${OLLAMA_PORT:-11434}:11434"
+    command: sh -c "ollama serve & sleep 10 && ollama pull phi3 && wait"
 volumes:
   elasticsearch_data:
   postgres_data:
