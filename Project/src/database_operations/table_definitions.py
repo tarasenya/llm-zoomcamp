@@ -27,8 +27,6 @@ class Conversation(Base):
     overall_score = Column(Float, nullable=True)
     explanation = Column(String, nullable=True)
     improvement_suggestions = Column(String, nullable=True)
-    # TODO: delete this column
-    relevance_explanation = Column(String, nullable=False)
     timestamp = Column(DateTime(timezone=True), nullable=False)
     feedback = relationship("Feedback", back_populates="conversation")
 

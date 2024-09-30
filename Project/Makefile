@@ -1,4 +1,4 @@
-.PHONY: start_elastic_search ingest_data start_basic_cli run_streamlit_application run_streamlit_application_with_ingestion fetch_phi
+.PHONY: start_elastic_search ingest_data start_basic_cli run_streamlit_application run_streamlit_application_with_ingestion fetch_phi clean_volumes
 
 start_elastic_search:
 	docker run -it \
@@ -49,3 +49,6 @@ run_streamlit_application:
 
 fetch_phi:
 	docker compose exec ollama ollama pull phi3
+
+clean_volumes:
+	docker compose down -v --remove-orphans

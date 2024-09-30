@@ -35,8 +35,6 @@ def save_conversation(
             model_used=model_used,
             response_time=response_time,
             clarity=llm_judgement_score.clarity,
-            #TODO: Delete it
-            relevance_explanation = 'Hello',
             relevance=llm_judgement_score.relevance,
             accuracy=llm_judgement_score.accuracy,
             completeness=llm_judgement_score.completeness,
