@@ -1,3 +1,5 @@
+import os
+
 from openai import OpenAI
 from abc import ABC, abstractmethod
 from typing import Any
@@ -44,17 +46,14 @@ class ChatGPTRAG(AbstractRAG):
         for doc in search_results:
             context+= f"vague: {doc['vague']}\nactual: {doc['actual']}\n\n"
         prompt = self.prompt_template.format(vague=query, context=context)    
-        return prompt    
-    
-    @staticmethod
-    def parse_answer(input_string):
-        result = {line.split(': ')[0]: line.split(': ')[1].strip() for line in input_string.split('\n') if line}
-        return result['ACTUAL']            
-    
+        return prompt      
+          
     def llm(self, prompt):
         response = self.client.chat.completions.create(model=self.llm_model,
                                              messages=[{'role': 'user', 'content': prompt}],)
         _message = response.choices[0].message.content
         return _message
     
-        
+class OllamaRag(ChatGPTRAG):
+    OLLAMA_URL = os.getenv("OLLAMA_URL", "http://ollama:11434/v1/")
+    client = OpenAI(base_url=OLLAMA_URL, api_key="ollama")

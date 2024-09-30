@@ -18,11 +18,11 @@ class LLMJudgementScore:
     def from_dict(cls, data: Dict) -> "LLMJudgementScore":
         criteria_scores = data["Criteria Scores"]
         return cls(
-            clarity=criteria_scores["Clarity"],
-            relevance=criteria_scores["Relevance"],
-            accuracy=criteria_scores["Accuracy"],
-            completeness=criteria_scores["Completeness"],
-            overall_score=data["Overall Score"],
+            clarity=criteria_scores.get("Clarity", 0),
+            relevance=criteria_scores.get("Relevance", 0),
+            accuracy=criteria_scores.get("Accuracy", 0),
+            completeness=criteria_scores.get("Completeness", 0),
+            overall_score=data.get("Overall Score", 0),
             explanation=data.get("Explanation", None),
             improvement_suggestions=data.get("Improvement Suggestions", None)
         )
