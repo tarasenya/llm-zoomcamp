@@ -22,10 +22,10 @@ The following retrieval possibilities has been considered:
  - Keyword search.
   For every retrieval evaluation a separate index has been defined (see [ingestion code](./src/data_ingestion.py)) and a separate class for a search functionality has been introduced (see [elastic search code](./src/elastic_search_engine.py)). The results are as the following:
 
-  | Metric   | keyword search | multi-qa-MiniLM-L6-cos-v1 | all-mpnet-base-v2 |
-  | -------- | -------------- | ------------------------- | ----------------- |
-  | hit_rate | 0.95           | 0.87                      | 0.97              |
-  | mrr      | 0.90           | 0.81                      | 0.93              |
+  | Metric   | keyword search | multi-qa-MiniLM-L6-cos-v1 | all-mpnet-base-v2 | hybrid search |
+  | -------- | -------------- | ------------------------- | ----------------- |---------------| 
+  | hit_rate | 0.95           | 0.87                      | 0.97              | 0.95          |  
+  | mrr      | 0.90           | 0.81                      | 0.93              | 0.85          |      
  
  I will use a knn elastic search with __all-mpnet-base-v2__ module in the future.
 
