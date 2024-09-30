@@ -3,6 +3,7 @@ import time
 import uuid
 
 from ambiguity_resolver_rag import ambiguity_resolver_rag
+from phi_rag import phi3_rag
 from judge_llm import JudgeLLM, LLMJudgementScore, JudgeLLMPromptInput
 from database_operations.db import (
     save_conversation,
@@ -29,8 +30,9 @@ def main():
 
     # Model selection
     model_choice = st.selectbox(
-        "Select a model:",
-        ["openai/gpt-4o-mini"],
+        'Select a model:',
+        ['openai/gpt-4o-mini',
+         'ollama/phi3'],
     )
     print_log(f"User selected model: {model_choice}")
 
@@ -48,7 +50,10 @@ def main():
         with st.spinner("Processing..."):
             print_log(f"Getting answer from assistant using {model_choice}.")
             start_time = time.time()
-            _answer = ambiguity_resolver_rag.rag_results(vague=user_input)
+            if model_choice == 'openai/gpt-4o-mini':
+                _answer = ambiguity_resolver_rag.rag_results(vague=user_input)
+            else:
+                _answer = phi3_rag.rag_results(vague=user_input)    
             _judge_llm_input: JudgeLLMPromptInput = {
                 "vague": user_input,
                 "translation": _answer,

@@ -1,4 +1,4 @@
-.PHONY: start_elastic_search ingest_data start_basic_cli run_streamlit_application run_streamlit_application_with_ingestion
+.PHONY: start_elastic_search ingest_data start_basic_cli run_streamlit_application run_streamlit_application_with_ingestion fetch_phi
 
 start_elastic_search:
 	docker run -it \
@@ -41,8 +41,11 @@ run_all_cli:
 	@make start_basic_cli
 
 run_streamlit_application_with_ingestion:
-	@echo "Starting Strealit Application"
-	@docker-compose --profile init up
+	@echo "Starting Streamlit Application"
+	docker compose --profile init up
 
 run_streamlit_application:
-	docker-compose up
+	docker compose up
+
+fetch_phi:
+	docker compose exec ollama ollama pull phi3
