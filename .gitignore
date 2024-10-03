@@ -7,3 +7,4 @@ ollama_files/
 .ssh_tunnel/
 *.log
 *.pyc
+.ruff_cache/

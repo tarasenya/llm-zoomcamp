@@ -1,8 +1,11 @@
 import os
-import rag
-import elastic_search_engine
 
-ambiguity_resolver_prompt = """You are an Ambiguity Resolver for tech management communication. Your task is to:
+import elastic_search_engine
+import rag
+
+
+ambiguity_resolver_prompt = """You are an Ambiguity Resolver for tech management 
+communication. Your task is to:
 
 1. Interpret the VAGUE STATEMENT from an IT manager
 2. Consider the given CONTEXT

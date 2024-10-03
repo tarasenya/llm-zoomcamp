@@ -25,6 +25,8 @@ jupyter = "*"
 ipykernel = "*"
 seaborn = "*"
 faker = "*"
+ruff = "*"
+isort = "*"
 
 [requires]
 python_version = "3.10"

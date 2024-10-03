@@ -1,8 +1,11 @@
 import os
+
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from sqlalchemy import create_engine
+
 from .table_definitions import Base
+
 
 def create_user_and_db():
     if os.path.exists("../.env"):

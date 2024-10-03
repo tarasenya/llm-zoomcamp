@@ -1,8 +1,14 @@
+"""
+Implements a RAG that exploits Phi3 Model as an LLM model in Ollama fashion.
+"""
 import os
-import rag
-import elastic_search_engine
 
-ambiguity_resolver_prompt = """You are an Ambiguity Resolver for tech management communication. Your task is to:
+import elastic_search_engine
+import rag
+
+
+ambiguity_resolver_prompt = """You are an Ambiguity Resolver for tech management 
+communication. Your task is to:
 
 1. Interpret the VAGUE STATEMENT from an IT manager
 2. Consider the given CONTEXT
@@ -18,6 +24,12 @@ CLEAR STATEMENT:""".strip()
 
 
 def create_ollama_rag(ollama_model_name: str, elastic_url=None):
+    """
+    Create an Ollama RAG instance with specified model and Elasticsearch configuration.
+    :param ollama_model_name: Name of the Ollama model to use.
+    :param elastic_url: Optional Elasticsearch URL, defaults to None.
+    :return: Configured OllamaRag instance.
+    """
     if elastic_url:
         os.environ['ELASTIC_URL'] = elastic_url
     

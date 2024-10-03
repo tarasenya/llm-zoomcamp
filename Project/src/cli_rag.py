@@ -1,10 +1,14 @@
 import os
+
 import click
 from dotenv import load_dotenv
+
 import ambiguity_resolver_rag
 
+
 @click.command()
-@click.option('--elastic_url', default='http://localhost:9200', help='Elasticsearch URL')
+@click.option('--elastic_url', default='http://localhost:9200', 
+              help='Elasticsearch URL')
 def main(elastic_url):
     """RAG CLI for resolving ambiguous statements."""
     # Load environment variables from .env file

@@ -1,12 +1,18 @@
+"""
+Artificial generation of initial data.
+"""
 import asyncio
 import json
 from pathlib import Path
-from typing import List, Dict
+from typing import Dict
+from typing import List
 
 import aiohttp
-from dotenv import load_dotenv, find_dotenv
-from openai import AsyncOpenAI
+from dotenv import find_dotenv
+from dotenv import load_dotenv
 from loguru import logger
+from openai import AsyncOpenAI
+
 
 # Load environment variables
 load_dotenv(find_dotenv())

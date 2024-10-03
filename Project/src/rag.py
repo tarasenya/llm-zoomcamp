@@ -1,8 +1,13 @@
+"""
+Includes different RAG classes: ChatGPTRAG and OllamaRAG that incapsulate
+neccessary functionality.
+"""
 import os
+from abc import ABC
+from abc import abstractmethod
+from typing import Any
 
 from openai import OpenAI
-from abc import ABC, abstractmethod
-from typing import Any
 from sentence_transformers import SentenceTransformer
 
 from elastic_search_engine import ElasticKeywordSearcher

@@ -1,9 +1,13 @@
 import asyncio
 import os
-from data_ingestion import main_semantic_search
-from database_operations.base_db_operations import init_db, create_user_and_db
+
 from dotenv import load_dotenv
-from loguru import logger 
+from loguru import logger
+
+from data_ingestion import main_semantic_search
+from database_operations.base_db_operations import create_user_and_db
+from database_operations.base_db_operations import init_db
+
 
 if os.path.exists('../.env'):
     load_dotenv('../.env')  

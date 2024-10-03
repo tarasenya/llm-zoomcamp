@@ -1,7 +1,9 @@
-import llm
 import re
 from dataclasses import dataclass
-from typing import Dict, TypedDict
+from typing import Dict
+from typing import TypedDict
+
+import llm
 
 
 @dataclass
@@ -24,17 +26,23 @@ class LLMJudgementScore:
             completeness=criteria_scores.get("Completeness", 0),
             overall_score=data.get("Overall Score", 0),
             explanation=data.get("Explanation", None),
-            improvement_suggestions=data.get("Improvement Suggestions", None)
+            improvement_suggestions=data.get("Improvement Suggestions", None),
         )
+
 
 class JudgeLLMPromptInput(TypedDict):
     vague: str
     translation: str
-    
+
+
 class JudgeLLM:
     judge_prompt_template = """ 
     LLM-as-a-Judge Prompt for RAG Evaluation
-    You are an expert judge evaluating the performance of a Retrieval-Augmented Generation (RAG) system. This system is designed to translate vague statements from IT bosses into their actual meanings. Your task is to assess the quality and accuracy of the RAG system's translations.
+    You are an expert judge evaluating the performance of a 
+    Retrieval-Augmented Generation (RAG) system. 
+    This system is designed to translate vague statements from IT bosses into their 
+    actual meanings. 
+    Your task is to assess the quality and accuracy of the RAG system's translations.
     For each example, you will be provided with:
 
     The original vague statement or question from the IT boss
@@ -52,8 +60,10 @@ class JudgeLLM:
     Evaluate the translation on the following criteria:
     a. Accuracy: How well does the translation capture the intended meaning?
     b. Clarity: Is the translation clear and easy to understand?
-    c. Completeness: Does the translation cover all important aspects of the actual meaning?
-    d. Relevance: Does the translation focus on the most important parts of the vague statement?
+    c. Completeness: Does the translation cover all important aspects of the actual 
+    meaning?
+    d. Relevance: Does the translation focus on the most important parts of the vague 
+    statement?
     Provide a score for each criterion on a scale of 1-5, where:
     1 = Poor
     2 = Fair
@@ -61,8 +71,10 @@ class JudgeLLM:
     4 = Very Good
     5 = Excellent
     Give an overall score (1-5) for the translation.
-    Provide a brief explanation (2-3 sentences) for your scoring, highlighting strengths and areas for improvement.
-    If the translation is incorrect or misleading, explain what went wrong and suggest how it could be improved.
+    Provide a brief explanation (2-3 sentences) for your scoring, highlighting strengths
+    and areas for improvement.
+    If the translation is incorrect or misleading, explain what went wrong and suggest
+    how it could be improved.
 
     Output Format
     Please structure your evaluation like this:
@@ -81,14 +93,15 @@ class JudgeLLM:
 
     @staticmethod
     def parse_evaluation_text(text: str) -> dict:
-        """
-
-        Args:
-            text str: answer got from Judge-LLM (gpt-5o-mini)
-
-        Returns:
-            dict: of the following format  {'Criteria Scores': {'Clarity':..., 'Relevance':..., 'Accuracy':..., 'Completeness':...}, 'Overall Score': ...,
-            'Explanation':..., 'Imporvement Suggestions': ...}
+        """ Parses the answer from gpt-4o-mini in a particular form
+        :param text: answer got from Judge-LLM (gpt-5o-mini)
+        :type text: str
+        :return:
+            dict: of the following format  {'Criteria Scores': 
+            {'Clarity':..., 'Relevance':..., 'Accuracy':..., 'Completeness':...}, 
+            'Overall Score': ...,
+            'Explanation':..., 'Improvement Suggestions': ...} 
+        :rtype: dict
         """
         # Initialize the dictionary
         result = {"Criteria Scores": {}}
