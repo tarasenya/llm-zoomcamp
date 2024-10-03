@@ -134,16 +134,22 @@ The account on IAM & Admin service on GCP looks as the following:
    # the last command can be substituted by:
    # terraform apply -var project=PROJECT_ID
    ```
-2. The infrastructure is provisioned.
+2. The infrastructure is provisioned. Docker and docker compose have been automatically installed by the terrafrom script.
 
     The VM looks in the GCP console as the following:
 ![VM](./images/vm_on_gcp_console.png)
 3. Either connect to it on GCP or go to use standard SSH method to connect to it (for more details consult [this](https://cloud.google.com/compute/docs/connect/standard-ssh#gcloud)).
-4. Install Docker as described [here](https://docs.docker.com/engine/install/ubuntu/).
-5. 
-6. Clone a repository and go to _Project_ folder:
+
+4. Clone a repository and go to _Project_ folder inside it:
    ```bash 
         git clone https://github.com/tarasenya/llm-zoomcamp.git
+        cd llm-zoomcamp/Project
    ```
-7.    
+5. Rename ```dev.env``` to ```env``` and paste a valid _OPENAI_API_KEY_.
+6. ```bash
+      chmod +x start.sh
+      ./start.sh
+   ```   
+7. The application is up and running and after a minute everything is ready to open an application (database operations and igestion are completed):
+![App](./images/docker-compose_screenshot.png)   
 
