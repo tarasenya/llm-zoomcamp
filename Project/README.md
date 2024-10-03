@@ -20,6 +20,7 @@ The following retrieval possibilities has been considered:
  - Semantic search exploiting ```SentenceTransformer``` with the model _multi-qa-MiniLM-L6-cos-v1_.
  - Semantic search exploiting ```SentenceTransformer``` with the model _all-mpnet-base-v2_.
  - Keyword search.
+ - Hybrid search.
   For every retrieval evaluation a separate index has been defined (see [ingestion code](./src/data_ingestion.py)) and a separate class for a search functionality has been introduced (see [elastic search code](./src/elastic_search_engine.py)). The results are as the following:
 
   | Metric   | keyword search | multi-qa-MiniLM-L6-cos-v1 | all-mpnet-base-v2 | hybrid search |
@@ -52,8 +53,9 @@ Streamlit Application (see [Dockerfile](Dockerfile)) together with related servi
 Rename ```dev.env``` to ```env``` and input the OPENAI_API_KEY.
 
 ```bash
- make run_streamlit_application_with_ingestion 
- ```
+    chmod +x start.sh
+    ./start.sh
+```
 
 To start it once again:
 

@@ -8,3 +8,10 @@ ollama_files/
 *.log
 *.pyc
 .ruff_cache/
+terraform.json
+*.tfstate
+*.hcl
+*.lock.info
+*.tfstate
+*.tfstate.backup
+.terraform/
