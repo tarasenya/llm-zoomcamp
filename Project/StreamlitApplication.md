@@ -32,6 +32,11 @@ The application consists of the following services
 All services use named volumes for data persistence.
 
 ## Code
+1. Implementation of an application relates on streamlit library.
+2. The connection with database exploits _psycopg2_ library. CRUD operations are exploiting _sqlalchemy_.
+3. Where it makes sense the code is parallelized using _asyncio_, _aiohttp_.
+4. The connection to ChatGPT exploits openai library.
+5. The code quality is maintained using ruff, hwoever with not the strictest checks.
 
 ## Ingestion
 
@@ -49,6 +54,7 @@ The ingestion is executed using ```ìnit``` container that calls a [script](src/
 Metrics 1, 2, 4 are calculated using [llm-as-a-judge](./src/judge_llm.py), the 3rd metric is a feedback from a user. The 5th metric is a characteristics of a RAG/Application.
 
 To gather statistics quicker [a script](./src/create_artificial_data.py) that creates an artificial data and ingests it to the DB has been used.
+Note: on the first login to Grafana one should change a password.
 
 ## Reproducibility
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Start all services
-docker compose up -d
+docker compose --profile init up -d
 
 # Wait for Ollama service to be ready
 echo "Waiting for Ollama service to be ready..."

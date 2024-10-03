@@ -41,7 +41,6 @@ def generate_data(n_minutes):
             overall_score=round(random.uniform(0, 5), 2),
             explanation=fake.paragraph(),
             improvement_suggestions=fake.paragraph(),
-            relevance_explanation=fake.sentence(),
             timestamp=current_time,
         )
         session.add(conv)
