@@ -246,8 +246,8 @@ async def main_hybrid_search(
 
 
 if __name__ == "__main__":
-    # asyncio.run(main_semantic_search(model_name='all-mpnet-base-v2',
-    #                                 index_name='vague-actual-mpnet',
-    #                                dims=768))
+     asyncio.run(main_semantic_search(model_name='all-mpnet-base-v2',
+                                     index_name='vague-actual-mpnet',
+                                     dims=768))
     # asyncio.run(main_key_work_search())
-    asyncio.run(main_hybrid_search())
+    #asyncio.run(main_hybrid_search())

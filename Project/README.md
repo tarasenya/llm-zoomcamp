@@ -1,18 +1,23 @@
-# LLM final Project
+# LLM-Zoomcamp Final Project: Vague Interpreter
 
 ## Brief description of the project
 
-Everyday one confronts with vague statements of his/her boss. Often a boss tries to formulate tasks, give pieces of advice indirect, which causes lots of misunderstanding. Experiencing this from time to time I considered it to be a good idea to build a RAG, which helps an IT employee to understand what a boss really wants. Hence an aim of this project is:
-- to build a RAG system that gets a vague question/statement from a boss and 'translates' it into the form one can unambiguously understand.
+Everyday one confronts with vague statements of his/her boss. Often a boss tries to formulate tasks, give pieces of advice indirect, which causes lots of misunderstanding. Experiencing this from time to time I considered it to be a good idea to build a RAG, which helps an IT employee to understand what a boss really wants. An example of such dialogue could be:
+
+_Vague statement:_ We need to become speedy gonzales to get this mess done asap.
+_Clear statement:_ We need to increase our efficiency and productivity to complete our tasks as soon as possible.
+
+Hence an aim of this project is:
+- to build a RAG system that gets a vague question/statement from a boss and 'translates' it into the form one can unambiguously understand
 - build a UI for this RAG system
-- Containerize it and deploy to a GCP
+- containerize it and deploy to a GCP
 
 ## Data Generation
 Since it is a sensible topic, the corresponding data has been generated using ChatGPT.
-This is done using ```src/inital_data_generation.py```. The corresponding output has been saved to ```data/initial_data.json```.
+This is done using [this script](./data_utils/initial_data_generation.py). The corresponding output has been saved to ```data/initial_data.json```.
 
 ## Ground Truth Generation
-Ground truth has been also generated using ChtaGPT (_gpt-4o-mini_ model). The result has been saved to ```data/ground_truth_data.csv```. This data has been used for a retrieval evaluation.
+Ground truth has been also generated using ChtaGPT (_gpt-4o-mini_ model). The result has been saved to ```data/ground_truth_data.csv```, see the corresponndig [code](./data_utils/generating_ground_truth_asyncio.py). This data has been used for a retrieval evaluation.
 
 ## Data Retrieval
 Data Retrieval has been evaluated using __hit_rate__ and __mrr__ metrics. I refer to the [Evaluation retrieval notebook](./notebooks/retrieval_evaluation.ipynb).
@@ -28,11 +33,14 @@ The following retrieval possibilities has been considered:
   | hit_rate | 0.95           | 0.87                      | 0.97              | 0.95          |  
   | mrr      | 0.90           | 0.81                      | 0.93              | 0.85          |      
  
- I will use a knn elastic search with __all-mpnet-base-v2__ module in the future.
+ I will use a knn elastic search with __all-mpnet-base-v2__ module in the rest of the project.
 
-Disclaimer: The results are so good, since the data has been generated using ChatGPT,hence we do not have the variability of the real world. Of course, one can play with prompts to achieve it, but due to lack of time I leave it as it is.
+_Disclaimer:_ The results are so good, since the data has been generated using ChatGPT, hence we do not have the variability of the real world. Of course, one can play with prompts to achieve it, but due to lack of time I leave it as it is.
+
 ## RAG
+
 A RAG is defined through a Knowledge Base (in this case ElasticSearch with ingected [inital_data.json](./data/initial_data.json)) and wrapper over LLM, that is defined through an LLM model and a prompt with context and a request.
+
 ### RAG Evaluation
 In the [evaluation notebook](./notebooks/rag_evaluation.ipynb) the offline evaluation for two rags, that are different in prompts they use, has been executed:
 - The cosine similarity for [ground truth data](./data/ground_truth_data.csv) has been estimated and the correspondent distribution compared.
@@ -42,13 +50,14 @@ The RAG with a specific prompt has shown a much better quality and hence will be
 ## Production phase
 
 ### CLI
-This is the easiest possibility to serve it. Execute the following from the root folder of a project (assuming that make and docker have been installed)
+This is the easiest possibility to serve it. Execute the following from the root folder of a project (assuming that Python 3.10 or higher, make and docker have been installed)
 ```bash
 make run_all_cli
 ```
-This starts docker container with Elastic Search, ignests the inital data and starts an easy CLI to interact with RAG.
+This starts docker container with Elastic Search, ingests the inital data and starts an easy CLI to interact with RAG.
 
 ### Streamlit Applicaiton
+
 Streamlit Application (see [Dockerfile](Dockerfile)) together with related services have been [dockerized](docker-compose.yaml). To start it for the first time (then the ingestion will be triggered, this exploits _init_ container that is started, ingestion is being triggered and then it exists):
 Rename ```dev.env``` to ```env``` and input the OPENAI_API_KEY.
 

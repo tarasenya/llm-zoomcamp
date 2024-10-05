@@ -1,5 +1,5 @@
 # Streamlit Application
-![general_view](images/application.png)
+![architecture](images/architecture.png)
 ## Containerization
 The application consists of the following services
 * ```elasticsearch```
@@ -32,15 +32,15 @@ The application consists of the following services
 All services use named volumes for data persistence.
 
 ## Code
-1. Implementation of an application relates on streamlit library.
-2. The connection with database exploits _psycopg2_ library. CRUD operations are exploiting _sqlalchemy_.
+1. The implementation of the application relates on a streamlit library.
+2. The connection to database exploits _psycopg2_ library. CRUD operations are exploiting _sqlalchemy_.
 3. Where it makes sense the code is parallelized using _asyncio_, _aiohttp_.
-4. The connection to ChatGPT exploits openai library.
-5. The code quality is maintained using ruff, hwoever with not the strictest checks.
+4. The connection to ChatGPT exploits _openai_ library.
+5. The code quality is maintained using ruff, however with not the strictest checks.
 
 ## Ingestion
 
-The ingestion is executed using ```ìnit``` container that calls a [script](src/initializing_application.py) (that also creates a database and auser with granted permissions).In its turn this script uses an async ingestion to an Elastic Search using [script](src/data_ingestion.py)
+The ingestion is executed using ```init``` container that calls a [script](src/initializing_application.py) (that also creates a database and a user with granted permissions). In it's turn this script uses an async ingestion to an Elastic Search using [script](src/data_ingestion.py)
 
 ## Monitoring
 ![grafana](images/grafana.png)
@@ -59,34 +59,36 @@ Note: on the first login to Grafana one should change a password.
 ## Reproducibility
 
 One needs only to
-0. have Docker on a computer.
+
+0. have a new version (v2) of Docker on a computer.
 1. define an own ```.env``` file, that is similar to ```dev.env```.
 2. execute from a root folder 
     ```bash
     chmod +x start.sh
     ./start.sh
     ```
-3. wait until all services are up and the ingestion has been executed (Remark: unfortunately the _depens-on_ function od docker does NOT gurantee the correct order of container execution, one needs to work with definition of healthiness of a service, but I dont have time for this)
-4. go to 8501 port on localhost and enjoy the applciation.
+3. wait until all services are up and the ingestion has been executed (Remark: unfortunately the _depens-on_ function of docker does NOT gurantee the correct order of container execution, one needs to work with definition of healthiness of a service, but I don't have time for this, hence one just needs to wait until the ingest container finishes his work and stops).
+4. go to 8501 port on localhost and use the applciation.
 _Remark:_ The code dependencies are defined in Pipfile/Pipfile.lock.
-_Remark:_ Sometimes changes graffan service the UUID of a data source, than one needs to go to the corresponding JSON definition of a dashboard and change th UUID on the new UUID of the current data source.
+_Remark:_ Sometimes graffana changes UUID of a data source, than one needs to go to the corresponding JSON definition of a dashboard and change th UUID on the new UUID of the current data source.
 
 ## Deployment to the cloud
 The deployment to GCP VM is explained here in details:
-*The following is assumed:**
+*The following is assumed:*
 0. The project has been cloned into a local environment (laptop):
    ```https://github.com/tarasenya/llm-zoomcamp.git```
 1. One is the _Project_ folder of the repository.
 2. CLI ```gcloud``` is installed and authorised to a GCP account:
 3. The GCP project you want to use for the pet-project has been created (then change the variable "project" in ```infra/variables.tf``` to the defined name) and the project is set up as default for  ```gcloud```:
-   ```gcloud config set project YOUR_PROJECT_ID```
+   
+   ```bash 
+   gcloud config set project YOUR_PROJECT_ID
+   ```
 4. The following APIs has been activated for the project:
 
 | NAME                                	| TITLE                                    	|
 |-------------------------------------	|------------------------------------------	|
 | cloudapis.googleapis.com            	| Google Cloud APIs                        	|
-| cloudresourcemanager.googleapis.com 	| Cloud Resource Manager API               	|
-| cloudtrace.googleapis.com           	| Cloud Trace API                          	|
 | compute.googleapis.com              	| Compute Engine API                       	|
 | iam.googleapis.com                  	| Identity and Access Management (IAM) API 	|
 | iamcredentials.googleapis.com       	| IAM Service Account Credentials API      	|
@@ -134,7 +136,7 @@ The account on IAM & Admin service on GCP looks as the following:
    # the last command can be substituted by:
    # terraform apply -var project=PROJECT_ID
    ```
-2. The infrastructure is provisioned. Docker and docker compose have been automatically installed by the terrafrom script.
+2. The infrastructure is provisioned. Docker and docker compose have been automatically installed by the [terrafrom script](./infra/main.tf).
 
     The VM looks in the GCP console as the following:
 ![VM](./images/vm_on_gcp_console.png)
@@ -146,10 +148,12 @@ The account on IAM & Admin service on GCP looks as the following:
         cd llm-zoomcamp/Project
    ```
 5. Rename ```dev.env``` to ```env``` and paste a valid _OPENAI_API_KEY_.
-6. ```bash
+6. 
+   ```bash
       chmod +x start.sh
       ./start.sh
    ```   
 7. The application is up and running and after a minute everything is ready to open an application (database operations and igestion are completed):
 ![App](./images/docker-compose_screenshot.png)   
+![general_view](images/application.png)
 
